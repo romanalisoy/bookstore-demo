@@ -6,18 +6,8 @@ import {httpError} from "../exceptions/http.exception";
 
 const server: Application = express();
 
-server.use((req, res, next) => {
-    const startTime: number = Date.now();
-    const originalJson = res.json;
-
-    res.json = function (data) {
-        data.time = Date.now() - startTime;
-        return originalJson.call(this, data);
-    };
-
-
-});
 server.use((err, req, res, next) => {
+    console.log(err)
     if (err instanceof httpError) {
         return res.status(err.code).json({
             status: false,
@@ -26,6 +16,7 @@ server.use((err, req, res, next) => {
     }
     next();
 });
+
 // cors handler
 server.use(cors({
     origin: '*',

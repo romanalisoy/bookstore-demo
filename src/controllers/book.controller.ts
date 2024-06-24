@@ -30,6 +30,7 @@ export default class BookController {
     }
 
     public async create(req: Request, res: Response) {
+        console.log("controller");
         const newBook = await bookService.create(await validateBook(req.body));
         res.status(201).json(newBook);
     }

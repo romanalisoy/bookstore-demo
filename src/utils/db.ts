@@ -1,4 +1,4 @@
-import mysql, {RowDataPacket} from 'mysql2/promise';
+import mysql from 'mysql2/promise';
 
 export const checkOrCreateDatabase = async () => {
     const databaseName: string = process.env.DB_NAME || "book_store";

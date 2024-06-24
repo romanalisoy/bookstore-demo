@@ -7,20 +7,21 @@ import process from "process";
 
 dotenv.config();
 
-checkOrCreateDatabase().then(() => {
-    AppDataSource.initialize()
-        .then(() => {
-            console.log("Data Source has been initialized!");
-        })
-        .catch((err) => {
-            console.error("Error during Data Source initialization:", err);
-        });
-})
-
 // Load server
 server.listen(process.env.APP_PORT ?? 3000, () => {
     console.log(
         `server running : http://localhost:${process.env.APP_PORT ?? 3000}`
     );
+});
+
+checkOrCreateDatabase().then(() => {
+    AppDataSource.initialize()
+        .then(() => {
+            console.log("Data Source has been initialized!");
+
+        })
+        .catch((err) => {
+            console.error("Error during Data Source initialization:", err);
+        });
 });
 

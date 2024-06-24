@@ -1,5 +1,3 @@
-import { errors } from "@vinejs/vine"
-
 export class httpError extends Error {
     code = 500;
 }
