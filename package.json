@@ -1,0 +1,21 @@
+{
+  "name": "bookstore-demo",
+  "version": "1.0.0",
+  "main": "dist/server.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "Mr. ELdar Muzaffarov",
+  "license": "ISC",
+  "description": "A Book Management API built with Node.js and TypeScript. This API allows you to manage books by providing endpoints to create, retrieve, update, and delete book records. Additional features include pagination, search functionality, and token-based authentication for protected endpoints.",
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^20.14.8",
+    "bcrypt": "^5.1.1",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.10.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.5.2"
+  }
+}
