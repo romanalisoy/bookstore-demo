@@ -1,12 +1,12 @@
 import mysql, {RowDataPacket} from 'mysql2/promise';
 
 export const checkOrCreateDatabase = async () => {
-    const databaseName: string = process.env.DB_NAME || "file";
+    const databaseName: string = process.env.DB_NAME || "book_store";
 
     const connection: mysql.Connection = await mysql.createConnection({
         host: process.env.DB_HOST || "localhost",
         port: Number(process.env.DB_PORT) || 3306,
-        user: process.env.DB_USERNAME || "app",
+        user: process.env.DB_USERNAME || "root",
         password: process.env.DB_PASSWORD || "",
     });
 

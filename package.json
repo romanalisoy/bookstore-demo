@@ -1,12 +1,14 @@
 {
   "name": "bookstore-demo",
   "version": "1.0.0",
-  "main": "dist/server.js",
   "scripts": {
     "typeorm": "typeorm",
-    "typeorm:migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n",
-    "typeorm:migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
-    "typeorm:migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert"
+    "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n",
+    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
+    "watch": "nodemon src/index.ts",
+    "start": "NODE_ENV=production node dist/src/index.js",
+    "build": "tsc --build",
+    "clean": "tsc --build --clean"
   },
   "keywords": [],
   "author": "Mr. ELdar Muzaffarov",
@@ -18,13 +20,16 @@
     "@vinejs/vine": "^2.1.0",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "typeorm-cli": "^1.0.7",
-    "vine": "^0.1.1"
+    "vine": "^0.1.1",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/node": "^20.14.8",
     "class-validator": "^0.14.1",
     "mysql2": "^3.10.1",

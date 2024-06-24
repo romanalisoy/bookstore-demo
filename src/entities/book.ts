@@ -12,7 +12,7 @@ export class Book {
     author: string;
 
     @Column()
-    published_date: Date;
+    published_date: string;
 
     @Column()
     isbn: string;

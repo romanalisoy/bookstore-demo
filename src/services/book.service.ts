@@ -1,35 +1,37 @@
 import { Book } from '../entities/book';
+import AppDataSource from "../configs/datasource.config";
+import {DataSource} from "typeorm";
 
-export class BookService {
+export default class BookService {
+
+    private dataSource: DataSource = AppDataSource;
 
     async create(bookData: Partial<Book>): Promise<Book> {
-        let book = new Book();
-
-        book.title = bookData.title;
-        book.author = bookData.author;
-        book.published_date = bookData.published_date;
-        book.isbn = bookData.isbn;
-        book.number_of_pages = bookData.number_of_pages;
-        book.cover_image_url = bookData.cover_image_url;
-        book.language = bookData.language;
-
-        const a = await book.save();
+        const book = this.dataSource.manager.create(Book, bookData);
+        await this.dataSource.manager.save(Book, book);
+        return book;
     }
 
     async getAll(): Promise<Book[]> {
-        return this.bookRepository.find();
+        return await this.dataSource.manager.find(Book);
     }
 
     async getById(id: number): Promise<Book | null> {
-        return this.bookRepository.findOne(id);
+        return await this.dataSource.manager.findOneBy(Book, { id });
     }
 
-    async update(id: number, bookData: Partial<Book>): Promise<Book> {
-        await this.bookRepository.update(id, bookData);
-        return this.getById(id);
+    async update(id: number, bookData: Partial<Book>): Promise<Book | null> {
+        const book = await this.dataSource.manager.findOneBy(Book, { id });
+        if (!book) {
+            return null;
+        }
+        this.dataSource.manager.merge(Book, book, bookData);
+        await this.dataSource.manager.save(Book, book);
+        return book;
     }
 
-    async delete(id: number): Promise<void> {
-        await this.bookRepository.delete(id);
+    async delete(id: number): Promise<boolean> {
+        const result = await this.dataSource.manager.delete(Book, { id });
+        return result.affected !== 0;
     }
 }

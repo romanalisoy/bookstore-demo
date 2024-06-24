@@ -40,6 +40,8 @@ const AppDataSourceConfigs: DataSourceOptions & { cli?: any } = {
     synchronize: false,
     logging: false,
     ssl: false,
+    insecureAuth: true,
+    connectorPackage: "mysql2",
     "entities": ["src/entities/**/*.ts"],
     "migrations": ["src/migrations/**/*.ts"],
     "cli": {
