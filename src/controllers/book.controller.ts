@@ -1,17 +1,13 @@
-import {Request, Response} from 'express';
+import {Response} from 'express';
+import {Request} from '../../types';
 import BookService from '../services/book.service';
 import {validateBook} from "../validations/book.validaton";
-
-const bookService = new BookService();
+import {Book} from "../../types/books";
 
 export default class BookController {
 
     private static _instance: BookController;
     private service: BookService;
-
-    constructor() {
-        this.service = new BookService();
-    }
 
     /**
      * Make the object singleton.
@@ -30,19 +26,26 @@ export default class BookController {
     }
 
     public async create(req: Request, res: Response) {
-        console.log("controller");
-        const newBook = await bookService.create(await validateBook(req.body));
+        req.service = new BookService();
+        const newBook: Book = await req.service.create(await validateBook(req.body));
         res.status(201).json(newBook);
     }
 
     public async getAll(req: Request, res: Response) {
-        const books = await bookService.getAll();
-        res.json(books);
+        req.service = new BookService();
+        const { page = "1", limit = "10", search = "" } = req.query;
+        const { data, count } = await req.service.getAll(
+            Number(page),
+            Number(limit),
+            search.toString()
+        );
+        res.status(200).json({ data: data as Book[], count, page: Number(page), limit: Number(limit) });
     }
 
     public async getById(req: Request, res: Response) {
+        req.service = new BookService();
         const id = parseInt(req.params.id);
-        const book = await bookService.getById(id);
+        const book = await req.service.getById(id);
         if (book) {
             res.json(book);
         } else {
@@ -51,14 +54,16 @@ export default class BookController {
     }
 
     public async update(req: Request, res: Response) {
+        req.service = new BookService();
         const id: number = parseInt(req.params.id);
-        const updatedBook = await bookService.update(id, await validateBook(req.body));
+        const updatedBook = await req.service.update(id, await validateBook(req.body));
         res.json(updatedBook);
     }
 
     public async delete(req: Request, res: Response) {
+        req.service = new BookService();
         const id = parseInt(req.params.id);
-        await bookService.delete(id);
+        await req.service.delete(id);
         res.status(204).send();
     }
 }

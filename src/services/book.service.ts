@@ -1,4 +1,4 @@
-import { Book } from '../entities/book';
+import {Book} from '../entities/book';
 import AppDataSource from "../configs/datasource.config";
 import {DataSource} from "typeorm";
 
@@ -13,16 +13,34 @@ export default class BookService {
         return book;
     }
 
-    async getAll(): Promise<Book[]> {
-        return await this.dataSource.manager.find(Book);
+    async getAll(
+        page: number = 1,
+        limit: number = 10,
+        search: string = ""
+    ): Promise<{
+        data: Book[];
+        count: number;
+    }> {
+        const offset = (page - 1) * limit;
+        const query = this.dataSource.manager
+            .createQueryBuilder(Book, "book")
+            .where("book.title LIKE :search OR book.author LIKE :search OR book.isbn LIKE :search", {
+                search: `%${search}%`,
+            })
+            .skip(offset)
+            .take(limit);
+
+        const [data, count] = await query.getManyAndCount();
+
+        return {data, count};
     }
 
     async getById(id: number): Promise<Book | null> {
-        return await this.dataSource.manager.findOneBy(Book, { id });
+        return await this.dataSource.manager.findOneBy(Book, {id});
     }
 
     async update(id: number, bookData: Partial<Book>): Promise<Book | null> {
-        const book = await this.dataSource.manager.findOneBy(Book, { id });
+        const book = await this.dataSource.manager.findOneBy(Book, {id});
         if (!book) {
             return null;
         }
@@ -32,7 +50,7 @@ export default class BookService {
     }
 
     async delete(id: number): Promise<boolean> {
-        const result = await this.dataSource.manager.delete(Book, { id });
+        const result = await this.dataSource.manager.delete(Book, {id});
         return result.affected !== 0;
     }
 }

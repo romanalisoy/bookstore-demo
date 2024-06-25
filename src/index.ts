@@ -1,3 +1,4 @@
+/// <reference path="../types/index.ts">
 import "reflect-metadata";
 import * as dotenv from "dotenv";
 import AppDataSource from "./configs/datasource.config";
@@ -18,7 +19,6 @@ checkOrCreateDatabase().then(() => {
     AppDataSource.initialize()
         .then(() => {
             console.log("Data Source has been initialized!");
-
         })
         .catch((err) => {
             console.error("Error during Data Source initialization:", err);

@@ -1,21 +1,10 @@
 import express, {Application} from "express";
-import router from "../routes/book.route";
+import bookRoutes from "../routes/book.route";
+import authRoutes from "../routes/auth.route";
 import cors from "cors";
 import bodyParser from "body-parser";
-import {httpError} from "../exceptions/http.exception";
 
 const server: Application = express();
-
-server.use((err, req, res, next) => {
-    console.log(err)
-    if (err instanceof httpError) {
-        return res.status(err.code).json({
-            status: false,
-            error: err.message
-        });
-    }
-    next();
-});
 
 // cors handler
 server.use(cors({
@@ -33,7 +22,24 @@ server.use(bodyParser.urlencoded({extended: true, limit: '150mb'}));
 
 
 // Load routes
-server.use('/api', router);
+server.use('/api', bookRoutes);
+server.use('/api', authRoutes);
+
+server.use("*",(req, res, next) => {
+    res.status(404).json({
+        status: false,
+        error: "Route not found"
+    });
+});
+
+server.use((err, req, res, next) => {
+    console.log("Error handler--------------------------------------------")
+
+    res.status(500).json({
+        status: false,
+        error: "httpError.INTERNAL_SERVER_ERROR"
+    });
+});
 
 
 export default server;
