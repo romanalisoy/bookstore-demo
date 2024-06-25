@@ -4,7 +4,7 @@
   "scripts": {
     "typeorm": "typeorm",
     "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n",
-    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
+    "migration:run": "npx typeorm-ts-node-commonjs migration:run -d ./src/configs/datasource.config.ts",
     "watch": "nodemon src/index.ts",
     "start": "NODE_ENV=production node dist/src/index.js",
     "build": "tsc --build",

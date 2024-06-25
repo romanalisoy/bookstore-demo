@@ -1,0 +1,433 @@
+{
+	"info": {
+		"_postman_id": "2571b4ea-707e-41b8-8ed6-2eed33516acd",
+		"name": "BookStoreDemo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5589643",
+		"_collection_link": "https://creator-community.postman.co/workspace/Team-Workspace~f1f07338-4644-4ee8-8072-6882a49b0882/collection/5589643-2571b4ea-707e-41b8-8ed6-2eed33516acd?action=share&source=collection_link&creator=5589643"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"romanalisoy\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/api/register",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"if (pm.response.code === 200 && response.token) { \r",
+									"    const token = response.token;\r",
+									"    pm.environment.set(\"BEARER\", token);\r",
+									"} else {\r",
+									"    console.log(\"Failed login or access_token not found\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"romanalisoy\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/api/login",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Book",
+			"item": [
+				{
+					"name": "Create a book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Test kitab\",\r\n    \"author\": \"Sr. Eldar Muzaffarov\",\r\n    \"published_date\": \"2024-06-25\",\r\n    \"isbn\": \"333333333333333333\",\r\n    \"number_of_pages\": \"5\",\r\n    \"cover_image_url\": \"https://barcode.tec-it.com/barcode.ashx?data=9781234567897&code=ISBN13\",\r\n    \"language\": \"AZ\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/api/books",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get book list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/api/books",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get book list",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}/api/books",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"books"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "557"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"22d-Hx73v9LSy9aLAvqEPdk8KBbdBto\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Jun 2024 08:12:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"Test Book\",\n            \"author\": \"Sr. Eldar Muzaffarovvv\",\n            \"published_date\": \"2024-06-24T20:00:00.000Z\",\n            \"isbn\": \"9781234567897\",\n            \"number_of_pages\": 5,\n            \"cover_image_url\": \"https://barcode.tec-it.com/barcode.ashx?data=9781234567897&code=ISBN13\",\n            \"language\": \"AZ\"\n        },\n        {\n            \"id\": 2,\n            \"title\": \"Test page\",\n            \"author\": \"Sr. Eldar Muzaffarovvv\",\n            \"published_date\": \"2024-06-24T20:00:00.000Z\",\n            \"isbn\": \"2222222222222222\",\n            \"number_of_pages\": 5,\n            \"cover_image_url\": \"https://barcode.tec-it.com/barcode.ashx?data=9781234567897&code=ISBN13\",\n            \"language\": \"AZ\"\n        }\n    ],\n    \"count\": 2,\n    \"page\": 1,\n    \"limit\": 10\n}"
+						},
+						{
+							"name": "Get book list with search params",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}/api/books?search=Book",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"books"
+									],
+									"query": [
+										{
+											"key": "search",
+											"value": "Book"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "297"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"129-QJ2PGnzrczpzN9xmp/Fv9TwcXww\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Jun 2024 08:12:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"Test Book\",\n            \"author\": \"Sr. Eldar Muzaffarovvv\",\n            \"published_date\": \"2024-06-24T20:00:00.000Z\",\n            \"isbn\": \"9781234567897\",\n            \"number_of_pages\": 5,\n            \"cover_image_url\": \"https://barcode.tec-it.com/barcode.ashx?data=9781234567897&code=ISBN13\",\n            \"language\": \"AZ\"\n        }\n    ],\n    \"count\": 1,\n    \"page\": 1,\n    \"limit\": 10\n}"
+						},
+						{
+							"name": "Get book list with different pages",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}/api/books?page=2&limit=1",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"books"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2"
+										},
+										{
+											"key": "limit",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "299"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"12b-bv/Fd7+7klrbEjJXpWx5Dj0QEvw\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Jun 2024 08:13:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 2,\n            \"title\": \"Test page\",\n            \"author\": \"Sr. Eldar Muzaffarovvv\",\n            \"published_date\": \"2024-06-24T20:00:00.000Z\",\n            \"isbn\": \"2222222222222222\",\n            \"number_of_pages\": 5,\n            \"cover_image_url\": \"https://barcode.tec-it.com/barcode.ashx?data=9781234567897&code=ISBN13\",\n            \"language\": \"AZ\"\n        }\n    ],\n    \"count\": 2,\n    \"page\": 2,\n    \"limit\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Get a book",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/api/books/1",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Test page\",\r\n    \"author\": \"Sr. Eldar Muzaffarovvv\",\r\n    \"published_date\": \"2024-06-25\",\r\n    \"isbn\": \"2222222222222222\",\r\n    \"number_of_pages\": \"5\",\r\n    \"cover_image_url\": \"https://barcode.tec-it.com/barcode.ashx?data=9781234567897&code=ISBN13\",\r\n    \"language\": \"AZ\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/api/books/2",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/api/books/3",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
