@@ -3,6 +3,8 @@ import bookRoutes from "../routes/book.route";
 import authRoutes from "../routes/auth.route";
 import cors from "cors";
 import bodyParser from "body-parser";
+import {httpError, httpUnprocessableEntity} from "../exceptions/http.exception";
+import {errorHandler} from "../utils/helper";
 
 const server: Application = express();
 
@@ -32,14 +34,5 @@ server.use("*",(req, res, next) => {
     });
 });
 
-server.use((err, req, res, next) => {
-    console.log("Error handler--------------------------------------------")
-
-    res.status(500).json({
-        status: false,
-        error: "httpError.INTERNAL_SERVER_ERROR"
-    });
-});
-
-
+server.use(errorHandler);
 export default server;

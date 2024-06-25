@@ -1,8 +1,6 @@
-import {date, number, object, string} from 'yup';
-import {Book} from "../../types/books";
-import {httpUnprocessableEntity} from "../exceptions/http.exception";
-
-
+import { date, number, object, string } from 'yup';
+import { Book } from "../../types/books";
+import { httpUnprocessableEntity } from "../exceptions/http.exception";
 
 export const validateBook: (data: Book) => Promise<Book> = async (data: Book) => {
     const bookSchema = object({
@@ -16,8 +14,8 @@ export const validateBook: (data: Book) => Promise<Book> = async (data: Book) =>
     });
 
     try {
-        return bookSchema.validateSync(data, {abortEarly: false, stripUnknown: true}) as Book;
+        return await bookSchema.validate(data, { abortEarly: false, stripUnknown: true }) as Book;
     } catch (e) {
-        throw new httpUnprocessableEntity(e.errors);
+        throw new httpUnprocessableEntity(e.errors.join(', '));
     }
 };
