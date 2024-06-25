@@ -1,4 +1,4 @@
-import {Response} from 'express';
+import {response, Response} from 'express';
 import {Request} from '../../types';
 import BookService from '../services/book.service';
 import {validateBook} from "../validations/book.validaton";
@@ -57,6 +57,11 @@ export default class BookController {
         req.service = new BookService();
         const id: number = parseInt(req.params.id);
         const updatedBook = await req.service.update(id, await validateBook(req.body));
+        if(updatedBook === null){
+            return response.status(404).send({
+                message: "Book not found",
+            })
+        }
         res.json(updatedBook);
     }
 

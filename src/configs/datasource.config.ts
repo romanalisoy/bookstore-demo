@@ -42,8 +42,8 @@ const AppDataSourceConfigs: DataSourceOptions & { cli?: any } = {
     ssl: false,
     insecureAuth: true,
     connectorPackage: "mysql2",
-    "entities": ["src/entities/**/*.ts"],
-    "migrations": ["src/migrations/**/*.ts"],
+    "entities": [`${__dirname}/../entities/**/*`],
+    "migrations": [`${__dirname}/../migrations/**/*`],
     "cli": {
         "migrationsDir": "src/migration"
     },

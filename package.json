@@ -5,6 +5,7 @@
     "typeorm": "typeorm",
     "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n",
     "migration:run": "npx typeorm-ts-node-commonjs migration:run -d ./src/configs/datasource.config.ts",
+    "migration:production": "typeorm migration:run -d dist/src/configs/datasource.config.js",
     "watch": "nodemon src/index.ts",
     "start": "NODE_ENV=production node dist/src/index.js",
     "build": "tsc --build",
