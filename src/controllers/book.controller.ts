@@ -3,12 +3,11 @@ import {Request} from '../../types';
 import BookService from '../services/book.service';
 import {validateBook} from "../validations/book.validaton";
 import {Book} from "../../types/books";
-import {httpError, httpUnprocessableEntity} from "../exceptions/http.exception";
+import {httpUnprocessableEntity} from "../exceptions/http.exception";
 
 export default class BookController {
 
     private static _instance: BookController;
-    private service: BookService;
 
     /**
      * Make the object singleton.

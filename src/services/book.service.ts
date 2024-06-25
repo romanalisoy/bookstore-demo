@@ -8,7 +8,6 @@ export default class BookService {
     private dataSource: DataSource = AppDataSource;
 
     async create(bookData: Partial<Book>): Promise<Book> {
-        console.log('bookData', bookData)
         const book = this.dataSource.manager.create(Book, bookData);
         await this.dataSource.manager.save(Book, book);
         return book;

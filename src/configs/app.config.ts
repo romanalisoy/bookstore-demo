@@ -3,7 +3,6 @@ import bookRoutes from "../routes/book.route";
 import authRoutes from "../routes/auth.route";
 import cors from "cors";
 import bodyParser from "body-parser";
-import {httpError, httpUnprocessableEntity} from "../exceptions/http.exception";
 import {errorHandler} from "../utils/helper";
 
 const server: Application = express();

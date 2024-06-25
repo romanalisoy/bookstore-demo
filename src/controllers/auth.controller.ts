@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { UserService } from "../services/user.service";
 
-const userService = new UserService();
+const userService: UserService = new UserService();
 
 export const register = async (req: Request, res: Response) => {
     try {
