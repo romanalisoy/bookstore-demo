@@ -21,7 +21,7 @@ A Book Management API built with Node.js, TypeScript, MySQL, and TypeORM. It sup
 1. **Clone the repository:**
 
     ```sh
-    git clone https://github.com/your-username/book-management-api.git
+    git clone https://github.com/romanalisoy/book-management-api.git
     cd book-management-api
     ```
 
@@ -52,7 +52,7 @@ A Book Management API built with Node.js, TypeScript, MySQL, and TypeORM. It sup
 1. **Clone the repository:**
 
     ```sh
-    git clone https://github.com/your-username/book-management-api.git
+    git clone https://github.com/romanalisoy/book-management-api.git
     cd book-management-api
     ```
 
